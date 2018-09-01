@@ -1,2 +1,0 @@
-# AddUserNotes
-Piwigo plugin
