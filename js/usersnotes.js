@@ -3,7 +3,11 @@ function fill_container_user_info(container, user_index) {
     let registration_dates = user.registration_date.split(' ');
     container.attr('key', user_index);
     container.find(".user-container-username span").html(user.username);
-	container.find(".user-container-usernotes span").html(user.usernotes);
+    if (user.usernotes) {
+      container.find(".user-notes-icon").tipTip({content:`${user.usernotes}`});
+    } else {
+      container.find(".user-notes-icon").hide();
+    }
     container.find(".user-container-initials span").html(get_initials(user.username)).addClass(color_icons[user.id % 5]);
     container.find(".user-container-status span").html(user.status);
     container.find(".user-container-email span").html(user.email);
@@ -37,32 +41,40 @@ function fill_user_edit_summary(user_to_edit, pop_in, isGuest) {
     pop_in.find('.user-property-last-visit').tipTip({content: `${last_visit_str}<br />${user_to_edit.last_visit_since}`});
 
     var usernotes_to_display = user_to_edit.usernotes ? user_to_edit.usernotes : '';
-    if (usernotes_to_display.length > 70) {
-        usernotes_to_display = usernotes_to_display.substring(0, 70) + '<span title="' + user_to_edit.usernotes + '">...</span>'
-    }
-	pop_in.find('.usernotes-title').html(usernotes_to_display);
-	pop_in.find('.user-property-usernotes-change input').val(user_to_edit.usernotes);
+    // if (usernotes_to_display.length > 70) {
+    //     usernotes_to_display = usernotes_to_display.substring(0, 70) + '<span title="' + user_to_edit.usernotes + '">...</span>'
+    // }
+    pop_in.find('.usernotes-title').html(usernotes_to_display);
+    pop_in.find('.user-property-usernotes-change input').val(user_to_edit.usernotes);
 }
 
 $( document ).ready(function() {
     $('.edit-usernotes').click(function () {
         $('.user-property-usernotes').hide();
+        $(this).hide();
         $('.user-property-usernotes-change').show().css('display', 'flex');
     })
 
     $('.edit-usernotes-cancel').click(function () {
         //possibly reset input value
         $('.user-property-usernotes').show();
+        $('.edit-usernotes').show();
         $('.user-property-usernotes-change').hide();
     })
+
+    jQuery('.tiptip').tipTip({
+      delay: 0,
+      fadeIn: 200,
+      fadeOut: 200
+    });
 });
 
 function fill_user_edit_update(user_to_edit, pop_in) {
     pop_in.find('.update-user-button').unbind("click").click(
-        user_to_edit.id === guest_id ? update_guest_info : update_user_info);
+    user_to_edit.id === guest_id ? update_guest_info : update_user_info);
     pop_in.find('.edit-username-validate').unbind("click").click(update_user_username);
     pop_in.find('.edit-password-validate').unbind("click").click(update_user_password);
-	pop_in.find('.edit-usernotes-validate').unbind("click").click(update_user_usernotes);
+	  pop_in.find('.edit-usernotes-validate').unbind("click").click(update_user_usernotes);
     pop_in.find('.delete-user-button').unbind("click").click(function () {
         $.confirm({
             title: title_msg.replace('%s', user_to_edit.username),
@@ -110,6 +122,7 @@ function update_user_usernotes() {
                 $("#UserList .update-user-success").fadeIn().delay(1500).fadeOut(2500);
                 $('.user-property-usernotes').show();
                 $('.user-property-usernotes-change').hide();
+                $('.edit-usernotes').show();
             }
         }
     })

@@ -1,4 +1,4 @@
 File automatically created from SVN or Git repository.
 
 URL: http://piwigo.org/svn/extensions/AddUsersNotes 
-Revision: 32742
+Revision: 32888
