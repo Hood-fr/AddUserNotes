@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Add Users Notes
-Version: auto
+Version: 15.a
 Description: Adds admin notes to users profiles
-Plugin URI: http://piwigo.org/ext/extension_view.php?eid=580
+Plugin URI: https://piwigo.org/ext/extension_view.php?eid=580
 Author: ddtddt
 Author URI: 
 */

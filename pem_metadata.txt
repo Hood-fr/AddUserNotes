@@ -1,0 +1,4 @@
+File automatically created from SVN or Git repository.
+
+URL: https://github.com/Piwigo/piwigo-AddUsersNotes 
+Revision: c832c9b09271e533618cabff52a28a1bf0f67d2d (Thu Oct 17 16:07:55 2024 +0200)
